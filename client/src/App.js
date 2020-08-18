@@ -11,7 +11,7 @@ class App extends React.Component {
         .then(res => res.text())
         .then(res => this.setState({ apiResponse: res }));
 }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.callAPI();
 }
 render() {
