@@ -14,6 +14,9 @@ class App extends React.Component {
   UNSAFE_componentWillMount() {
     this.callAPI();
 }
+
+
+
 render() {
   return (
     <div className="App">
@@ -22,7 +25,7 @@ render() {
       </header>
 
       <body>
-        <form>
+        <form method="post" action="http://localhost:9000/keyword">
           <label> Give me a song that makes me feel... </label>
           <input type="text" id="keyword" name="keyword" />
           <input type="submit" value="Submit" />
