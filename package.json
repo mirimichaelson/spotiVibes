@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "apistart": "node ./bin/www",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test ./client",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
