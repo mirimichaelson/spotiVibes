@@ -20,17 +20,17 @@ it("renders Account header", () => {
 });
 
 
-describe('page', () => { 
-   beforeAll(async () => {
-    await page.goto('https://localhost:3000')
-     })
-     it('should display "API is working properly" text on page', async () => {
-        await expect(page).toMatch('API is working properly')  
-      })})
+// describe('page', () => { 
+//    beforeAll(async () => {
+//     await page.goto('https://localhost:3000')
+//      })
+//      it('should display "API is working properly" text on page', async () => {
+//         await expect(page).toMatch('API is working properly')
+//       })})
 
 // it('should display "google" text on page', async () => {
 //   const wrapper = shallow(<App />);
-//   await expect(wrapper).toMatch('API is working properly')  
+//   await expect(wrapper).toMatch('API is working properly')
 // });
 
 

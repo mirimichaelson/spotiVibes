@@ -18,18 +18,16 @@ render() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p className="App-intro">;{this.state.apiResponse}</p>
-        <h1>Welcome</h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+
+      <body>
+        <form>
+          <label> Give me a song that makes me feel... </label>
+          <input type="text" id="keyword" name="keyword" />
+          <input type="submit" value="Submit" />
+        </form>
+      </body>
     </div>
   );
 }
