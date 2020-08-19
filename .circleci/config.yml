@@ -1,10 +1,31 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+# workflows:
+#   node-tests:
+#     jobs:
+#       - node/test
+
+jobs:
+  build:
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - npm install
+      - run: npm install
+  test:
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - npm test
+      - run: npm test
+
+
+
+
 workflows:
-  node-tests:
+  build_and_test:
     jobs:
-      # - node/test
-        - run:
-          name: Run Tests
-          command: npm test
+      - build
+      - test
+
