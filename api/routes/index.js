@@ -56,13 +56,17 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/keyword', function(req, res) {
-  var keyword = req.body.keyword;
-  var token = getToken();
+router.post('/keyword', async function(req, res) {
+  var keyword =  req.body.keyword;
+  var token =  getToken();
   var playlist = getPlaylist(token, keyword);
-  var song = getSongFromPlaylist(playlist, token);
-  console.log(song);
+  global.song = await getSongFromPlaylist(playlist, token);
+  res.redirect('http://localhost:3000')
  });
+
+ router.get('/song', function(req, res, next) {
+  res.send(global.song);
+});
 
 //   // console.log(res);
 //   request.on = function () {
