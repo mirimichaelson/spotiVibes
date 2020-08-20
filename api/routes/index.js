@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var request = require("request");
 const fetch = require("node-fetch");
+global.Buffer = global.Buffer || require('buffer').Buffer;
 
 
-const clientID = "040d08f49da545b9b0e32795e0dd8372";
-const clientSecret = "ceb87ad74e3b419292a0bb380b1051bf";
+const clientID = Buffer.from("040d08f49da545b9b0e32795e0dd8372").toString('base64');
+const clientSecret = Buffer.from("ceb87ad74e3b419292a0bb380b1051bf").toString('base64');
 
 
 getToken = async () => {
@@ -14,15 +15,18 @@ getToken = async () => {
     method: 'POST',
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
-      'Authorization' : 'Basic ' + btoa(clientID + ':' + clientSecret)
+      'Authorization' : 'Basic ' + clientID + ':' + clientSecret
+
     },
     body: 'grant_type=client_credentials'
   });
 
   const data = await result.json();
   console.log(`This is my access token: ${data.access_token}`);
+  console.log(result)
   return data.access_token;
-}
+  
+};
 
 getSong = async (token, keyword) => {
 
@@ -45,7 +49,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/keyword', function(req, res) {
   var keyword = req.body.keyword;
-  var result = getSong(getToken, keyword);
+  var result = getSong(getToken(), keyword);
   console.log(result);
  });
 
