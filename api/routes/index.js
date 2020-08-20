@@ -22,27 +22,34 @@ getToken = async () => {
 
   const data = await result.json();
   console.log(`This is my access token: ${data.access_token}`);
-  console.log("data inside getToken")
-  console.log(data)
   return data.access_token;
 
 };
 
-getSong = async (token, keyword) => {
-
-  const result = await fetch(`https://api.spotify.com/v1/search?q=%22${keyword}%22&type=playlist&market=UK&limit=1`, {
+getPlaylist = async (token, keyword) => {
+  spotifytoken = await token;
+  const result = await fetch(`https://api.spotify.com/v1/search?q=%22${keyword}%22&type=playlist&market=GB&limit=1`, {
     method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + token }
+    headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
-  console.log("token inside getSong")
-  console.log(token)
   const data = await result.json();
-  console.log(data);
-  return data;
+  return data.playlists.items[0].id;
 
 }
 
+getSongFromPlaylist = async (playlist, token) => {
+  spotifyPlaylist = await playlist;
+  spotifytoken = await token;
+  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=1`, {
+    method: 'GET',
+    headers: { 'Authorization' : 'Bearer ' + spotifytoken }
+  });
+  const data = await result.json();
+  console.log("TRACK ID BITCHES")
+  console.log(data.items[0].track.id)
+  return data.items[0].track.id;
 
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -52,8 +59,9 @@ router.get('/', function(req, res, next) {
 router.post('/keyword', function(req, res) {
   var keyword = req.body.keyword;
   var token = getToken();
-  var result = getSong(token, keyword);
-  console.log(result);
+  var playlist = getPlaylist(token, keyword);
+  var song = getSongFromPlaylist(playlist, token);
+  console.log(song);
  });
 
 //   // console.log(res);
