@@ -6,7 +6,7 @@ var btoa = require("btoa");
 
 
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
-const clientSecret = "ceb87ad74e3b419292a0bb380b1051bf";
+const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
 
 
 getToken = async () => {
@@ -22,8 +22,10 @@ getToken = async () => {
 
   const data = await result.json();
   console.log(`This is my access token: ${data.access_token}`);
+  console.log("data inside getToken")
+  console.log(data)
   return data.access_token;
-  
+
 };
 
 getSong = async (token, keyword) => {
@@ -32,8 +34,10 @@ getSong = async (token, keyword) => {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + token }
   });
-
+  console.log("token inside getSong")
+  console.log(token)
   const data = await result.json();
+  console.log(data);
   return data;
 
 }
@@ -47,7 +51,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/keyword', function(req, res) {
   var keyword = req.body.keyword;
-  var result = getSong(getToken(), keyword);
+  var token = getToken();
+  var result = getSong(token, keyword);
   console.log(result);
  });
 
@@ -61,6 +66,6 @@ router.post('/keyword', function(req, res) {
 //   }
 //   res.redirect('/')
 
-  
+
 
 module.exports = router;
