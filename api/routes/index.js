@@ -9,6 +9,13 @@ const clientID = "040d08f49da545b9b0e32795e0dd8372";
 const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
 
 
+function getRandomNumber() {  
+  return Math.floor(
+    Math.random() * (50 - 1 + 1) + 1
+  )
+}
+
+
 getToken = async () => {
 
   const result = await fetch('https://accounts.spotify.com/api/token', {
@@ -26,9 +33,10 @@ getToken = async () => {
 
 };
 
-getPlaylist = async (token, keyword) => {
+getPlaylist = async (token, keyword, number) => {
   spotifytoken = await token;
-  const result = await fetch(`https://api.spotify.com/v1/search?q=%22${keyword}%22&type=playlist&market=GB&limit=1`, {
+  randomNumber = await number;
+  const result = await fetch(`https://api.spotify.com/v1/search?q=%22${keyword}%22&type=playlist&market=GB&limit=1&offset=${randomNumber}`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
@@ -37,10 +45,11 @@ getPlaylist = async (token, keyword) => {
 
 }
 
-getSongFromPlaylist = async (playlist, token) => {
+getSongFromPlaylist = async (playlist, token, number) => {
   spotifyPlaylist = await playlist;
   spotifytoken = await token;
-  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=1`, {
+  randomNumber = await number;
+  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=1&offset=${randomNumber}`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
@@ -51,7 +60,6 @@ getSongFromPlaylist = async (playlist, token) => {
 
 }
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -59,25 +67,12 @@ router.get('/', function(req, res, next) {
 router.post('/keyword', async function(req, res) {
   var keyword =  req.body.keyword;
   var token =  getToken();
-  var playlist = getPlaylist(token, keyword);
-  global.song = await getSongFromPlaylist(playlist, token);
+  var playlist = getPlaylist(token, keyword, getRandomNumber());
+  global.song = await getSongFromPlaylist(playlist, token, getRandomNumber());
   res.redirect('http://localhost:3000')
  });
-
  router.get('/song', function(req, res, next) {
   res.send(global.song);
 });
-
-//   // console.log(res);
-//   request.on = function () {
-//     var data = JSON.parse(this.response)
-//     console.log(data)
-//     // "playlists": {
-//     // "items": [
-//     //   "id": "THIS PLAYLIST_ID"
-//   }
-//   res.redirect('/')
-
-
 
 module.exports = router;
