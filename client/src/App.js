@@ -7,14 +7,14 @@ class App extends React.Component {
     this.state = { apiResponse: "" };
 }
   callAPI() {
-    fetch("http://localhost:9000/testAPI")
+    fetch("http://localhost:9000/song")
         .then(res => res.text())
         .then(res => this.setState({ apiResponse: res }));
 }
+
   UNSAFE_componentWillMount() {
     this.callAPI();
 }
-
 
 
 render() {
@@ -30,6 +30,9 @@ render() {
           <input type="text" id="keyword" name="keyword" />
           <input type="submit" value="Submit" />
         </form>
+        <div>
+        <iframe src="https://open.spotify.com/embed/track/${this.state.apiResponse}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
       </body>
     </div>
   );
