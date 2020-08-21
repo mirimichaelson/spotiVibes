@@ -14,7 +14,8 @@ class App extends React.Component {
 
 
   callAPI() {
-    fetch("http://localhost:9000/song")
+    fetch("https://spotivibes.herokuapp.com/song")
+    // fetch("http://localhost:9000/song")
         .then(res => res.text())
         .then(res => this.setState({ song: res }));
 }
@@ -34,10 +35,11 @@ render() {
       </header>
 
       <body>
-        <form method="post" action="http://localhost:9000/keyword">
+        {/* <form method="post" action="http://localhost:9000/keyword"> */}
+        <form method="post" action="https://spotivibes.herokuapp.com/keyword">
           <label> Give me a song that makes me feel... </label>
           <input type="text" id="keyword" name="keyword" />
-          <input type="submit" value="Submit" />
+          <input onClick={this.handleClick} type="submit" value="Submit" />
         </form>
         <div>
         <iframe src={this.songUrl()} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>

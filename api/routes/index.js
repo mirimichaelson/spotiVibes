@@ -69,7 +69,10 @@ router.post('/keyword', async function(req, res) {
   var token =  getToken();
   var playlist = getPlaylist(token, keyword, getRandomNumber());
   global.song = await getSongFromPlaylist(playlist, token, getRandomNumber());
-  res.redirect('http://localhost:3000')
+  // res.redirect('http://localhost:3000')
+  res.redirect('http://spotivibes.surge.sh/')
+
+  
  });
  router.get('/song', function(req, res, next) {
   res.send(global.song);
