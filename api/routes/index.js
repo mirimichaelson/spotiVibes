@@ -60,7 +60,7 @@ getSongIDsFromPlaylist = async (playlist, token, number) => {
   songs.forEach((song) => {
     songIDs.push(song.track.id);
   });
-  console.log(songIDs);
+  // console.log(songIDs);
   return songIDs;
 }
 
@@ -72,8 +72,8 @@ getSongAttributes = async (songIDs, token) => {
     requestIDs += id + '%2C'
   })
   requestIDs = requestIDs.substring(0, requestIDs.length - 3);
-  console.log("These are the request ID's: ")
-  console.log(requestIDs)
+  // console.log("These are the request ID's: ")
+  // console.log(requestIDs)
 
 
   const result = await fetch(`https://api.spotify.com/v1/audio-features?ids=${requestIDs}`, {
@@ -82,9 +82,16 @@ getSongAttributes = async (songIDs, token) => {
   });
 
   const data = await result.json();
-  console.log("Audio features: ")
-  console.log(data);
+  return data
+  // console.log("Audio features: ")
+  // console.log(data);
 }
+
+getRelevantSong = (songsToFilter, valence) => {
+  songsToFilter.audio_features.forEach((song) => {
+    console.log(song.valence);
+  });
+};
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -96,11 +103,15 @@ router.post('/keyword', async function(req, res) {
   var playlist = getPlaylist(token, keyword, getRandomNumber());
   var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
   var attributes = await getSongAttributes(songs, token);
+  getRelevantSong(attributes);
+  // console.log(attributes.audio_features);
 
-  console.log("Song attributes: ")
-  console.log(attributes)
-  console.log("Song valence: ")
-  console.log(attributes.valence)
+  // global.song = finalSong;
+  
+  // console.log("Song attributes: ")
+  // console.log(attributes)
+  // console.log("Song valence: ")
+  // console.log(attributes.valence)
   res.redirect('http://localhost:3000')
   // res.redirect('http://spotivibes.surge.sh/')
   
