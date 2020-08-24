@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require("request");
 const fetch = require("node-fetch");
 var btoa = require("btoa");
+const { RequestHeaderFieldsTooLarge } = require('http-errors');
 
 
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
@@ -41,9 +42,9 @@ getPlaylist = async (token, keyword, number) => {
   });
   const data = await result.json();
   return data.playlists.items[0].id;
-}
+};
 
-getSongFromPlaylist = async (playlist, token, number) => {
+getSongIDsFromPlaylist = async (playlist, token, number) => {
   spotifyPlaylist = await playlist;
   spotifytoken = await token;
   randomNumber = await number;
@@ -59,20 +60,30 @@ getSongFromPlaylist = async (playlist, token, number) => {
   songs.forEach((song) => {
     songIDs.push(song.track.id);
   });
-
   console.log(songIDs);
-  return data.items[0].track.id;
+  return songIDs;
 }
 
-getSongAttributes = async (songID, token) => {
-  songID = await songID;
+getSongAttributes = async (songIDs, token) => {
+  songIDs = await songIDs;
   token = await token;
-  const result = await fetch(`https://api.spotify.com/v1/audio-features/` + ``, {
+  requestIDs = ''
+  songIDs.forEach((id) => {
+    requestIDs += id + '%2C'
+  })
+  requestIDs = requestIDs.substring(0, requestIDs.length - 3);
+  console.log("These are the request ID's: ")
+  console.log(requestIDs)
+
+
+  const result = await fetch(`https://api.spotify.com/v1/audio-features?ids=${requestIDs}`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
+
   const data = await result.json();
-  return data
+  console.log("Audio features: ")
+  console.log(data);
 }
 
 router.get('/', function(req, res, next) {
@@ -83,8 +94,9 @@ router.post('/keyword', async function(req, res) {
   var keyword =  req.body.keyword;
   var token =  getToken();
   var playlist = getPlaylist(token, keyword, getRandomNumber());
-  global.song = await getSongFromPlaylist(playlist, token, getRandomNumber());
-  var attributes = await getSongAttributes(global.song, token);
+  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
+  var attributes = await getSongAttributes(songs, token);
+
   console.log("Song attributes: ")
   console.log(attributes)
   console.log("Song valence: ")
