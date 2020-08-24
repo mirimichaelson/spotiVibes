@@ -1,84 +1,88 @@
-// Copyright 2017 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 'use strict';
 
-async function detectFaces(fileName) {
-  // [START vision_face_detection]
-  // Imports the Google Cloud client library
-  const vision = require('@google-cloud/vision');
+var express = require('express');
+var fs = require('fs');
+var util = require('util');
+var mime = require('mime');
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'});
 
-  // Creates a client
-  const client = new vision.ImageAnnotatorClient();
+// Set up auth
+var gcloud = require('@google-cloud/vision');
+({
+  keyFilename: 'key.json',
+  projectId: 'model-sphere-287410'
+});
 
-  /**
-   * TODO(developer): Uncomment the following line before running the sample.
-   */
-  // const fileName = 'Local image file, e.g. /path/to/image.png';
+var vision = gcloud.vision();
 
-  const [result] = await client.faceDetection(fileName);
-  const faces = result.faceAnnotations;
-  console.log('Faces:');
-  faces.forEach((face, i) => {
-    console.log(`  Face #${i + 1}:`);
-    console.log(`    Joy: ${face.joyLikelihood}`);
-    console.log(`    Anger: ${face.angerLikelihood}`);
-    console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-    console.log(`    Surprise: ${face.surpriseLikelihood}`);
+var app = express();
+
+// Simple upload form
+var form = '<!DOCTYPE HTML><html><body>' +
+  "<form method='post' action='/upload' enctype='multipart/form-data'>" +
+  "<input type='file' name='image'/>" +
+  "<input type='submit' /></form>" +
+  '</body></html>';
+
+app.get('/image', function(req, res) {
+  res.writeHead(200, {
+    'Content-Type': 'text/html'
   });
-  // [END vision_face_detection]
-}
+  res.end(form);
+});
 
-async function detectFacesGCS(bucketName, fileName) {
-  // [START vision_face_detection_gcs]
-  // Imports the Google Cloud client libraries
-  const vision = require('@google-cloud/vision');
+// Get the uploaded image
+// Image is uploaded to req.file.path
+app.post('/upload', upload.single('image'), function(req, res, next) {
 
-  // Creates a client
-  const client = new vision.ImageAnnotatorClient();
+  // Choose what the Vision API should detect
+  // Choices are: faces, landmarks, labels, logos, properties, safeSearch, texts
+  var types = ['labels'];
 
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const bucketName = 'Bucket where the file resides, e.g. my-bucket';
-  // const fileName = 'Path to file within bucket, e.g. path/to/image.png';
+  // Send the image to the Cloud Vision API
+  vision.detect(req.file.path, types, function(err, detections, apiResponse) {
+    if (err) {
+      res.end('Cloud Vision Error');
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'text/html'
+      });
+      res.write('<!DOCTYPE HTML><html><body>');
 
-  // Performs face detection on the gcs file
-  const [result] = await client.faceDetection(`gs://${bucketName}/${fileName}`);
-  const faces = result.faceAnnotations;
-  console.log('Faces:');
-  faces.forEach((face, i) => {
-    console.log(`  Face #${i + 1}:`);
-    console.log(`    Joy: ${face.joyLikelihood}`);
-    console.log(`    Anger: ${face.angerLikelihood}`);
-    console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-    console.log(`    Surprise: ${face.surpriseLikelihood}`);
+      // Base64 the image so we can display it on the page
+      res.write('<img width=200 src="' + base64Image(req.file.path) + '"><br>');
+
+      // Write out the JSON output of the Vision API
+      res.write(JSON.stringify(detections, null, 4));
+
+      // Delete file (optional)
+      fs.unlinkSync(req.file.path);
+
+      res.end('</body></html>');
+    }
   });
-  // [END vision_face_detection_gcs]
-}
+});
 
-require(`yargs`) // eslint-disable-line
-  .demand(1)
-  .command(
-    'faces <fileName>',
-    'Detects faces in a local image file.',
-    {},
-    opts => detectFaces(opts.fileName)
-  )
-  .command(
-    'faces-gcs <bucketName> <fileName>',
-    'Detects faces in an image in Google Cloud Storage.',
-    {},
-    opts => detectFacesGCS(opts.bucketName, opts.fileName)
-  )
+// app.listen(9000);
+console.log('Server Started');
+
+// Turn image into Base64 so we can display it easily
+
+function base64Image(src) {
+  var data = fs.readFileSync(src).toString('base64');
+  return util.format('data:%s;base64,%s', mime.lookup(src), data);
+}
