@@ -11,7 +11,7 @@ const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
 
 function getRandomNumber() {  
   return Math.floor(
-    Math.random() * (50 - 1 + 1) + 1
+    Math.random() * (5 - 1 + 1) + 1
   )
 }
 
@@ -47,18 +47,27 @@ getSongFromPlaylist = async (playlist, token, number) => {
   spotifyPlaylist = await playlist;
   spotifytoken = await token;
   randomNumber = await number;
-  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=1&offset=${randomNumber}`, {
+  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=50`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
   const data = await result.json();
+
+  var songs = data.items;
+  var songIDs = [];
+
+  songs.forEach((song) => {
+    songIDs.push(song.track.id);
+  });
+
+  console.log(songIDs);
   return data.items[0].track.id;
 }
 
 getSongAttributes = async (songID, token) => {
   songID = await songID;
   token = await token;
-  const result = await fetch(`https://api.spotify.com/v1/audio-features/${songID}`, {
+  const result = await fetch(`https://api.spotify.com/v1/audio-features/` + ``, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
