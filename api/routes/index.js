@@ -3,6 +3,8 @@ var router = express.Router();
 var request = require("request");
 const fetch = require("node-fetch");
 var btoa = require("btoa");
+const { RequestHeaderFieldsTooLarge } = require('http-errors');
+
 
 
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
@@ -11,7 +13,8 @@ const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
 
 function getRandomNumber() {  
   return Math.floor(
-    Math.random() * (50 - 1 + 1) + 1
+    Math.random() * (5 - 1 + 1) + 1
+
   )
 }
 
@@ -28,7 +31,6 @@ getToken = async () => {
   });
 
   const data = await result.json();
-  console.log(`This is my access token: ${data.access_token}`);
   return data.access_token;
 
 };
@@ -43,22 +45,58 @@ getPlaylist = async (token, keyword, number) => {
   const data = await result.json();
   return data.playlists.items[0].id;
 
-}
+};
 
-getSongFromPlaylist = async (playlist, token, number) => {
+getSongIDsFromPlaylist = async (playlist, token, number) => {
   spotifyPlaylist = await playlist;
   spotifytoken = await token;
   randomNumber = await number;
-  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=1&offset=${randomNumber}`, {
+  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=50`, {
+
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
   const data = await result.json();
-  console.log("TRACK ID BITCHES")
-  console.log(data.items[0].track.id)
-  return data.items[0].track.id;
 
+  var songs = data.items;
+  var songIDs = [];
+
+  songs.forEach((song) => {
+    songIDs.push(song.track.id);
+  });
+  // console.log(songIDs);
+  return songIDs;
 }
+
+getSongAttributes = async (songIDs, token) => {
+  songIDs = await songIDs;
+  token = await token;
+  requestIDs = ''
+  songIDs.forEach((id) => {
+    requestIDs += id + '%2C'
+  })
+  requestIDs = requestIDs.substring(0, requestIDs.length - 3);
+  // console.log("These are the request ID's: ")
+  // console.log(requestIDs)
+
+
+  const result = await fetch(`https://api.spotify.com/v1/audio-features?ids=${requestIDs}`, {
+    method: 'GET',
+    headers: { 'Authorization' : 'Bearer ' + spotifytoken }
+  });
+
+  const data = await result.json();
+  return data
+  // console.log("Audio features: ")
+  // console.log(data);
+}
+
+getRelevantSong = (songsToFilter, valence) => {
+  songsToFilter.audio_features.forEach((song) => {
+    console.log(song.valence);
+  });
+};
+
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -68,11 +106,21 @@ router.post('/keyword', async function(req, res) {
   var keyword =  req.body.keyword;
   var token =  getToken();
   var playlist = getPlaylist(token, keyword, getRandomNumber());
-  global.song = await getSongFromPlaylist(playlist, token, getRandomNumber());
-  // res.redirect('http://localhost:3000')
-  res.redirect('http://spotivibes.surge.sh/')
+  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
+  var attributes = await getSongAttributes(songs, token);
+  getRelevantSong(attributes);
+  // console.log(attributes.audio_features);
 
+
+  // global.song = finalSong;
   
+  // console.log("Song attributes: ")
+  // console.log(attributes)
+  // console.log("Song valence: ")
+  // console.log(attributes.valence)
+  res.redirect('http://localhost:3000')
+  // res.redirect('http://spotivibes.surge.sh/')
+
  });
  router.get('/song', function(req, res, next) {
   res.send(global.song);
