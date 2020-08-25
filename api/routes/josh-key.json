@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fair-charmer-287508",
+  "private_key_id": "4e264a5064b171639bd023a7f4efa06702730b9e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCYpkoGTldHzEmg\niRhPuvr3OoNJcySr7b+DYxln7GjlFenme6SzynWMhNbrVHqu/j0+Naqgh8606sAr\nu9WqhXamMHykTh3H6ual1bZGyyuj33RF1sV2h1Dky1nRSehTR0xl3yRLGwDkCMfp\njNttGUuqwenqY3RBiQP52uXDEYby5T0+FYzMbo6GkIVK5MYPWBdsAFyNdUNfLAoB\n6uM15Wy8ZUpdhUJp9o/OObRNqKsCDxJ2WrreEbf3cgQuVm0lu9MXyxOCOTbB7zWl\n/fLdZRZP9VQQaMwFljRKXvvbCQfbFWJFYKSIsuzJkL15t7Ah6Is5CFdZ+DOviWpr\npIzxP1PbAgMBAAECggEAP+aYpVQlKFql1ayePz4kMdtOOzCWwNwpKAyThZQLAx8t\nx3yp4VOW6qhvOZsnMlsecwzPLR081DJTGNusIZJ2LTKt8q/6uoYkYHZ6s974GUUA\n7P1vsuMJY4WWx0xbk4UMv7ZuAHzA3jSozyVWc7C7orNDQwm4EHkVb4IJXaPYLJRR\nHGRWvtkI9K3nwUtiWZODMP5p1iEB/pN1zi108mVKVOrjCuFIgXRclFq9F+27DGvG\nVUXKMWl/1Hv1WXqDms17k18EZdFreAYv/OyK4fjaAtR4MD3hp8lQlDkGL2j32ZyK\njikDpOKRZTzHm2EkrJiAljnLB5IqKW6kgzNMyMvbcQKBgQDU8mBNHQtjtBXubFe+\nZkLRVlqNfzfitRQn/hgBXtRolp9WOmUShqSXtiOSu+4TZQD7/Zw8Zij+MIBxw7eu\nnMny+dg00pY25AHk6Ic8xKlxyg/gWD72uRrjbZJKF0Qx2ksR+oD/nBXycnq/dQoH\ngPCv7YdD6SeYg92cDXWPyNUOiwKBgQC3gxI4Vb+Facv6Sbl0eSw4vZ/ZAc/Yb42/\nch9EZhqgFf3xInvGZl7U/zrBzOaAPxhRM9hevXLsxd4rRMmcj7MrjrBVx06rcT0y\nLdJiS+1T0cdbvZf1KxXPofu8AtjfXccigHemBrv27nAvgDHU5iO8RVZa05b25FD9\nVqs+rnVJ8QKBgHT4Wjuhi6MNxco8iwoUI/nXRFBbJDiMnPDG2yrNi0GUExwLYX+G\npByNuQad4k2W+q5whYSL3VKbE8Lp7hilGS01XjTNxCOMpRm3PKn9oNHXW1cxQgzG\nauWoR2YZV6VGslvCzV8avtd5WMGYKZUrl4oboGSGSvC05mMU5ZHAkH+3AoGAa8QG\n8Ro57EjixkqBJAr8kx2YP0G3IuzvmtuTzQEA5b3EcNTFRw9a5U403RZMzkc/KoB9\nsbUjRjQ0cchldRFWMGAM4XK3mipXu535DEx2RGDO5+sAz7LLjjEbuZ8aaKGTjYlP\nuin+O9Zt/xcTLGkx1yAIxDG5V6dggEVjLt4YdqECgYAIqGP6HMMGD9mKW6zku953\nESoCCpwTPWgySTigxWmVfjLmBEGl5xO+4xZF1vFe8fVe4JlHchez07MCeO1H3wiQ\n5uEGRYDX+XdevKoQ+wKeTQccgm/6VzcrFUuE4+Uc/Su6k4DEpQe5CDmLNBO5nNOd\n2R772RhNLbn7TP9OpITPng==\n-----END PRIVATE KEY-----\n",
+  "client_email": "spotivibes@fair-charmer-287508.iam.gserviceaccount.com",
+  "client_id": "115543988037054133355",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/spotivibes%40fair-charmer-287508.iam.gserviceaccount.com"
+}
