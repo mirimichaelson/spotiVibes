@@ -85,7 +85,7 @@ getSongIDFromList = async (listOfSongs, token, number) => {
   spotifyList = await listOfSongs;
   spotifytoken = await token;
   randomNumber = await number;
-  songID = await spotifyList.tracks[randomNumber][id]
+  songID = await spotifyList.tracks[randomNumber].id
 
   console.log(songID);
   return songID;
