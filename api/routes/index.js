@@ -18,7 +18,7 @@ async function quickstart() {
   const client = new language.LanguageServiceClient();
 
   // The text to analyze
-  const text = 'Hello, world!';
+  const text = global.keyword;
 
   const document = {
     content: text,
@@ -32,6 +32,10 @@ async function quickstart() {
   console.log(`Text: ${text}`);
   console.log(`Sentiment score: ${sentiment.score}`);
   console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+
+  const valence = (sentiment.score + 1) / 2
+
+  console.log(`Valence score: ${valence}`);
 }
 
 
@@ -127,9 +131,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/keyword', async function(req, res) {
-  var keyword =  req.body.keyword;
+  global.keyword =  req.body.keyword;
   var token =  getToken();
-  var playlist = getPlaylist(token, keyword, getRandomNumber());
+  var playlist = getPlaylist(token, global.keyword, getRandomNumber());
   var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
   var attributes = await getSongAttributes(songs, token);
   getRelevantSong(attributes);
