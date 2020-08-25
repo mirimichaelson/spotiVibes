@@ -40,14 +40,12 @@ async function quickstart() {
   console.log(`Valence score: ${global.finalValence}`);
 }
 
-
 function getRandomNumber() {  
   return Math.floor(
     Math.random() * (100 - 1 + 1) + 1
 
   )
 }
-
 
 getToken = async () => {
 
@@ -74,10 +72,7 @@ getListOfGenreSongs = async (token, valence, magnitude) => {
   
   const data = await result.json();
 
-  // console.log(data);
-  // console.log(data.tracks[1]);
   return data
-  // return data.playlists.items[0].id;
 
 };
 
@@ -91,36 +86,6 @@ getSongIDFromList = async (listOfSongs, token, number) => {
   return songID;
 }
 
-getSongAttributes = async (songIDs, token) => {
-  songIDs = await songIDs;
-  token = await token;
-  requestIDs = ''
-  songIDs.forEach((id) => {
-    requestIDs += id + '%2C'
-  })
-  requestIDs = requestIDs.substring(0, requestIDs.length - 3);
-  // console.log("These are the request ID's: ")
-  // console.log(requestIDs)
-
-
-  const result = await fetch(`https://api.spotify.com/v1/audio-features?ids=${requestIDs}`, {
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + spotifytoken }
-  });
-
-  const data = await result.json();
-  return data
-  // console.log("Audio features: ")
-  // console.log(data);
-}
-
-getRelevantSong = (songsToFilter, valence) => {
-  songsToFilter.audio_features.forEach((song) => {
-    console.log(song.valence);
-  });
-};
-
-
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -128,29 +93,23 @@ router.get('/', function(req, res, next) {
 router.post('/keyword', async function(req, res) {
   
   global.keyword =  req.body.keyword;
+
   var qs = await quickstart();
-  qs
+    qs
+
   var token =  getToken();
-  // var listOfSongs = 
 
   var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
-  getListOfSongs
-  var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
-  // var attributes = await getSongAttributes(songs, token);
-  // getRelevantSong(attributes);
 
-  // console.log(attributes.audio_features);
+  var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
 
   global.song = finalSong;
-  
-  // console.log("Song attributes: ")
-  // console.log(attributes)
-  // console.log("Song valence: ")
-  // console.log(attributes.valence)
+
   res.redirect('http://localhost:3000')
   // res.redirect('http://spotivibes.surge.sh/')
 
  });
+ 
  router.get('/song', function(req, res, next) {
   res.send(global.song);
 });
