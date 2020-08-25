@@ -34,8 +34,9 @@ async function quickstart() {
   console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
 
   const valence = (sentiment.score + 1) / 2
+  const finalValence = valence.toFixed(2);
 
-  console.log(`Valence score: ${valence}`);
+  console.log(`Valence score: ${finalValence}`);
 }
 
 
