@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@google-cloud/language": "^4.1.0",
     "btoa": "^1.2.1",
     "btoa-atob": "^0.1.2",
     "buffer": "^5.6.0",

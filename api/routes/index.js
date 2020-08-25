@@ -10,6 +10,30 @@ const { RequestHeaderFieldsTooLarge } = require('http-errors');
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
 const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
 
+async function quickstart() {
+  // Imports the Google Cloud client library
+  const language = require('@google-cloud/language');
+
+  // Instantiates a client
+  const client = new language.LanguageServiceClient();
+
+  // The text to analyze
+  const text = 'Hello, world!';
+
+  const document = {
+    content: text,
+    type: 'PLAIN_TEXT',
+  };
+
+  // Detects the sentiment of the text
+  const [result] = await client.analyzeSentiment({document: document});
+  const sentiment = result.documentSentiment;
+
+  console.log(`Text: ${text}`);
+  console.log(`Sentiment score: ${sentiment.score}`);
+  console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+}
+
 
 function getRandomNumber() {  
   return Math.floor(
@@ -109,6 +133,7 @@ router.post('/keyword', async function(req, res) {
   var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
   var attributes = await getSongAttributes(songs, token);
   getRelevantSong(attributes);
+  quickstart();
   // console.log(attributes.audio_features);
 
 
