@@ -16,6 +16,7 @@ class App extends React.Component {
   callAPI() {
     // fetch("https://spotivibes.herokuapp.com/song")
     fetch("http://localhost:9000/song")
+
         .then(res => res.text())
         .then(res => this.setState({ song: res }));
 }
@@ -37,6 +38,7 @@ render() {
       <body>
         <form method="post" action="http://localhost:9000/keyword">
         {/* <form method="post" action="https://spotivibes.herokuapp.com/keyword"> */}
+
           <label> Give me a song that makes me feel... </label>
           <input type="text" id="keyword" name="keyword" />
           <input onClick={this.handleClick} type="submit" value="Submit" />
