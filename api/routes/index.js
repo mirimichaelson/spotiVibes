@@ -28,21 +28,22 @@ async function quickstart() {
   // Detects the sentiment of the text
   const [result] = await client.analyzeSentiment({document: document});
   const sentiment = result.documentSentiment;
+  global.magnitude = sentiment.magnitude.toFixed(1);
 
   console.log(`Text: ${text}`);
   console.log(`Sentiment score: ${sentiment.score}`);
-  console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+  console.log(`Sentiment magnitude: ${global.magnitude}`);
 
   const valence = (sentiment.score + 1) / 2
-  const finalValence = valence.toFixed(2);
+  global.finalValence = valence.toFixed(2);
 
-  console.log(`Valence score: ${finalValence}`);
+  console.log(`Valence score: ${global.finalValence}`);
 }
 
 
 function getRandomNumber() {  
   return Math.floor(
-    Math.random() * (5 - 1 + 1) + 1
+    Math.random() * (100 - 1 + 1) + 1
 
   )
 }
@@ -64,37 +65,30 @@ getToken = async () => {
 
 };
 
-getPlaylist = async (token, keyword, number) => {
+getListOfGenreSongs = async (token, valence, magnitude) => {
   spotifytoken = await token;
-  randomNumber = await number;
-  const result = await fetch(`https://api.spotify.com/v1/search?q=%22${keyword}%22&type=playlist&market=GB&limit=1&offset=${randomNumber}`, {
+  const result = await fetch(`https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=jazz&min_popularity=50&target_valence=${valence}`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
+  
   const data = await result.json();
-  return data.playlists.items[0].id;
+
+  // console.log(data);
+  // console.log(data.tracks[1]);
+  return data
+  // return data.playlists.items[0].id;
 
 };
 
-getSongIDsFromPlaylist = async (playlist, token, number) => {
-  spotifyPlaylist = await playlist;
+getSongIDFromList = async (listOfSongs, token, number) => {
+  spotifyList = await listOfSongs;
   spotifytoken = await token;
   randomNumber = await number;
-  const result = await fetch(`https://api.spotify.com/v1/playlists/${spotifyPlaylist}/tracks?limit=50`, {
+  songID = await spotifyList.tracks[randomNumber][id]
 
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + spotifytoken }
-  });
-  const data = await result.json();
-
-  var songs = data.items;
-  var songIDs = [];
-
-  songs.forEach((song) => {
-    songIDs.push(song.track.id);
-  });
-  // console.log(songIDs);
-  return songIDs;
+  console.log(songID);
+  return songID;
 }
 
 getSongAttributes = async (songIDs, token) => {
@@ -132,17 +126,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/keyword', async function(req, res) {
+  
   global.keyword =  req.body.keyword;
+  var qs = await quickstart();
+  qs
   var token =  getToken();
-  var playlist = getPlaylist(token, global.keyword, getRandomNumber());
-  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
-  var attributes = await getSongAttributes(songs, token);
-  getRelevantSong(attributes);
-  quickstart();
+  // var listOfSongs = 
+
+  var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
+  getListOfSongs
+  var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
+  // var attributes = await getSongAttributes(songs, token);
+  // getRelevantSong(attributes);
+
   // console.log(attributes.audio_features);
 
-
-  // global.song = finalSong;
+  global.song = finalSong;
   
   // console.log("Song attributes: ")
   // console.log(attributes)
