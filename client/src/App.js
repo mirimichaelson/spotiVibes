@@ -23,8 +23,7 @@ class App extends React.Component {
 
   UNSAFE_componentWillMount() {
     this.callAPI();
-
-}
+  }
 
 
 render() {
@@ -48,7 +47,7 @@ render() {
           <input type="file" id="myFile" name="filename" />    
           <input type="submit"/>
         </form>
-        
+
         <div>
         <iframe src={this.songUrl()} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>

@@ -24,15 +24,97 @@ async function visionAnalysis(fileName) {
 
   const [result] = await client.faceDetection(fileName);
   const faces = result.faceAnnotations;
+  console.log("This is the result: ");
   console.log(result);
-  console.log('Faces:');
-  faces.forEach((face, i) => {
-    console.log(`  Face #${i + 1}:`);
-    console.log(`    Joy: ${face.joyLikelihood}`);
-    console.log(`    Anger: ${face.angerLikelihood}`);
-    console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-    console.log(`    Surprise: ${face.surpriseLikelihood}`);
-  });
+  console.log("End of result");
+
+  // annotationsObject = {
+  //   "joy": '',
+  //   "sorrow": '',
+  //   "anger": '',
+  //   "surprise": ''
+  // };
+
+  let emotionArray = []
+
+  if ((result.faceAnnotations[0].joyLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].sorrowLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].sorrowikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].sorrowLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].sorrowLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].angerLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].surpriseLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  console.log(emotionArray);
+  let i = emotionArray.indexOf(Math.max(...emotionArray));
+  console.log(i)
+
+  if (emotionArray.reduce == 0) {
+    return "desk"
+  }
+
+  if (i == 0) {
+    return "joy"
+  }
+  else if (i == 1) {
+    return "sorrow"
+  }
+  else if (i == 2) {
+    return "anger"
+  }
+  return "surprise"
+  
+  // console.log( `Min value: ${min}, max value: ${max}` );
+
+  // annotationsObject["sorrow"] = result.faceAnnotations[0].sorrowLikelihood;
+  // annotationsObject["anger"] = result.faceAnnotations[0].angerLikelihood;
+  // annotationsObject["surprise"] = result.faceAnnotations[0].surpriseLikelihood;
+  // console.log(annotationsObject);
+
   // [END vision_face_detection]
   // visionAnalysis(...process.argv.slice(2));
 }
@@ -159,15 +241,19 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/image', async function (req, res) {
-  console.log(req.files);
   var image = req.files.filename.data;
-  // console.log(image);
-  visionAnalysis(image);
-  res.redirect('http://localhost:3000')
+  var keyword = visionAnalysis(image);
+  var token =  getToken();
+  var playlist = getPlaylist(token, keyword, getRandomNumber());
+  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
+  var attributes = await getSongAttributes(songs, token);
+  getRelevantSong(attributes);
+  
+  res.redirect('http://localhost:3000');
 })
 
 router.post('/keyword', async function(req, res) {
-  var keyword =  req.body.keyword;
+  var keyword = req.body.keyword;
   var token =  getToken();
   var playlist = getPlaylist(token, keyword, getRandomNumber());
   var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
@@ -189,6 +275,7 @@ router.post('/keyword', async function(req, res) {
   // res.redirect('http://spotivibes.surge.sh/')
 
  });
+
  router.get('/song', function(req, res, next) {
   res.send(global.song);
 });
