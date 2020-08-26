@@ -36,13 +36,19 @@ render() {
       </header>
 
       <body>
-        <form method="post" action="http://localhost:9000/keyword">
-        {/* <form method="post" action="https://spotivibes.herokuapp.com/keyword"> */}
 
+          <form method="post" action="http://localhost:9000/keyword">
+        {/* <form method="post" action="https://spotivibes.herokuapp.com/keyword"> */}
           <label> Give me a song that makes me feel... </label>
           <input type="text" id="keyword" name="keyword" />
           <input onClick={this.handleClick} type="submit" value="Submit" />
         </form>
+      
+        <form method="post" action="http://localhost:9000/image" encType="multipart/form-data">
+          <input type="file" id="myFile" name="filename" />    
+          <input type="submit"/>
+        </form>
+        
         <div>
         <iframe src={this.songUrl()} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>

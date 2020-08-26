@@ -4,8 +4,40 @@ var request = require("request");
 const fetch = require("node-fetch");
 var btoa = require("btoa");
 const { RequestHeaderFieldsTooLarge } = require('http-errors');
+const fileUpload = require('express-fileupload');
 
+// default options
+'use strict';
 
+async function visionAnalysis(fileName) {
+  // [START vision_face_detection]
+  // Imports the Google Cloud client library
+  const vision = require('@google-cloud/vision');
+
+  // Creates a client
+  const client = new vision.ImageAnnotatorClient();
+
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const fileName = 'Local image file, e.g. /path/to/image.png';
+
+  const [result] = await client.faceDetection(fileName);
+  const faces = result.faceAnnotations;
+  console.log(result);
+  console.log('Faces:');
+  faces.forEach((face, i) => {
+    console.log(`  Face #${i + 1}:`);
+    console.log(`    Joy: ${face.joyLikelihood}`);
+    console.log(`    Anger: ${face.angerLikelihood}`);
+    console.log(`    Sorrow: ${face.sorrowLikelihood}`);
+    console.log(`    Surprise: ${face.surpriseLikelihood}`);
+  });
+  // [END vision_face_detection]
+  // visionAnalysis(...process.argv.slice(2));
+}
+
+// visionAnalysis(...process.argv.slice(2));
 
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
 const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
@@ -15,7 +47,7 @@ async function quickstart() {
   const language = require('@google-cloud/language');
 
   // Instantiates a client
-  const client = new language.LanguageServiceClient();
+  const clientLanguage = new language.LanguageServiceClient();
 
   // The text to analyze
   const text = 'Hello, world!';
@@ -26,7 +58,7 @@ async function quickstart() {
   };
 
   // Detects the sentiment of the text
-  const [result] = await client.analyzeSentiment({document: document});
+  const [result] = await clientLanguage.analyzeSentiment({document: document});
   const sentiment = result.documentSentiment;
 
   console.log(`Text: ${text}`);
@@ -126,6 +158,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.post('/image', async function (req, res) {
+  console.log(req.files);
+  var image = req.files.filename.data;
+  // console.log(image);
+  visionAnalysis(image);
+  res.redirect('http://localhost:3000')
+})
+
 router.post('/keyword', async function(req, res) {
   var keyword =  req.body.keyword;
   var token =  getToken();
@@ -133,7 +173,9 @@ router.post('/keyword', async function(req, res) {
   var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
   var attributes = await getSongAttributes(songs, token);
   getRelevantSong(attributes);
-  quickstart();
+  // visionAnalysis();
+  // quickstart();
+  // visionAnalysis();
   // console.log(attributes.audio_features);
 
 
