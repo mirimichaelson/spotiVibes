@@ -65,11 +65,61 @@ getToken = async () => {
 
 getListOfGenreSongs = async (token, valence, magnitude) => {
   spotifytoken = await token;
-  const result = await fetch(`https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=jazz&min_popularity=50&target_valence=${valence}`, {
+  wordMagnitude = await magnitude
+  console.log("this is word magnitude")
+  console.log(wordMagnitude)
+  console.log("does word magnitude match???")
+  console.log(wordMagnitude === "0.9")
+
+  // switch statement to match 
+  switch(wordMagnitude) {    
+    case "0.1":
+      console.log("in 0.1")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=chill%2Cambient&min_tempo=60&max_tempo=80&target_valence=${valence}`;
+      break
+    case "0.2":
+      console.log("in 0.2")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=classical%2Cambient%2Cstudy&target_energy=0.2&min_popularity=50&min_tempo=60&max_tempo=80&target_valence=${valence}`;
+      break
+    case "0.3":
+      console.log("in 0.3")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=reggae%2Csoul%2Cjazz&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.4":
+      console.log("in 0.4")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=trip-hop%2Csoul%2Cr-n-b&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.5":
+      console.log("in 0.5")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=folk%2Cafrobeat%2Cpop&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.6":
+      console.log("in 0.6")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=garage%2Cpop%2Chip-hop%2Canime&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.7":
+      console.log("in 0.7")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=electronic%2Cgarage%2Cdeep-house&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.8":
+      console.log("in 0.8")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=emo%2Cdisco%2Crock&min_popularity=50&target_valence=${valence}`;
+      break
+    case "0.9":
+      console.log("in 0.9")
+      link = `https://api.spotify.com/v1/recommendations?limit=100&market=GB&seed_genres=jazz&min_popularity=50&target_valence=${valence}`;
+      break
+    default:
+      console.log("this switch statement didn't work soz");
+  }
+
+  console.log(link)
+
+  const result = await fetch(`${link}`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + spotifytoken }
   });
-  
+
   const data = await result.json();
 
   return data
