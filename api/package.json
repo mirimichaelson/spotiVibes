@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@google-cloud/language": "^4.1.0",
+    "@google-cloud/vision": "^2.1.1",
     "btoa": "^1.2.1",
     "btoa-atob": "^0.1.2",
     "buffer": "^5.6.0",
@@ -14,6 +15,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-fileupload": "^1.2.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",

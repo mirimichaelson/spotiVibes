@@ -4,8 +4,122 @@ var request = require("request");
 const fetch = require("node-fetch");
 var btoa = require("btoa");
 const { RequestHeaderFieldsTooLarge } = require('http-errors');
+const fileUpload = require('express-fileupload');
 
+// default options
+'use strict';
 
+async function visionAnalysis(fileName) {
+  // [START vision_face_detection]
+  // Imports the Google Cloud client library
+  const vision = require('@google-cloud/vision');
+
+  // Creates a client
+  const client = new vision.ImageAnnotatorClient();
+
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const fileName = 'Local image file, e.g. /path/to/image.png';
+
+  const [result] = await client.faceDetection(fileName);
+  const faces = result.faceAnnotations;
+  console.log("This is the result: ");
+  console.log(result);
+  console.log("End of result");
+
+  // annotationsObject = {
+  //   "joy": '',
+  //   "sorrow": '',
+  //   "anger": '',
+  //   "surprise": ''
+  // };
+
+  let emotionArray = []
+
+  if ((result.faceAnnotations[0].joyLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].joyLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].sorrowLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].sorrowikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].sorrowLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].sorrowLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].angerLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].angerLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  if ((result.faceAnnotations[0].surpriseLikelihood) == "VERY_UNLIKELY") {
+    emotionArray.push(0);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "UNLIKELY") {
+    emotionArray.push(1);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "LIKELY") {
+    emotionArray.push(2);
+  }
+  else if ((result.faceAnnotations[0].surpriseLikelihood) == "VERY_LIKELY") {
+    emotionArray.push(3);
+  }
+
+  console.log(emotionArray);
+  let i = emotionArray.indexOf(Math.max(...emotionArray));
+  console.log(i)
+
+  if (emotionArray.reduce == 0) {
+    return "desk"
+  }
+
+  if (i == 0) {
+    return "joy"
+  }
+  else if (i == 1) {
+    return "sorrow"
+  }
+  else if (i == 2) {
+    return "anger"
+  }
+  return "surprise"
+  
+  // console.log( `Min value: ${min}, max value: ${max}` );
+
+  // annotationsObject["sorrow"] = result.faceAnnotations[0].sorrowLikelihood;
+  // annotationsObject["anger"] = result.faceAnnotations[0].angerLikelihood;
+  // annotationsObject["surprise"] = result.faceAnnotations[0].surpriseLikelihood;
+  // console.log(annotationsObject);
+
+  // [END vision_face_detection]
+  // visionAnalysis(...process.argv.slice(2));
+}
+
+// visionAnalysis(...process.argv.slice(2));
 
 const clientID = "040d08f49da545b9b0e32795e0dd8372";
 const clientSecret = "dc95f53d92534300adcec5a4fefe089f";
@@ -15,7 +129,7 @@ async function quickstart() {
   const language = require('@google-cloud/language');
 
   // Instantiates a client
-  const client = new language.LanguageServiceClient();
+  const clientLanguage = new language.LanguageServiceClient();
 
   // The text to analyze
   const text = global.keyword;
@@ -26,7 +140,7 @@ async function quickstart() {
   };
 
   // Detects the sentiment of the text
-  const [result] = await client.analyzeSentiment({document: document});
+  const [result] = await clientLanguage.analyzeSentiment({document: document});
   const sentiment = result.documentSentiment;
   global.magnitude = sentiment.magnitude.toFixed(1);
 
@@ -141,26 +255,32 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/keyword', async function(req, res) {
+router.post('/image', async function (req, res) {
+  var image = req.files.filename.data;
+  global.keyword = await visionAnalysis(image);
+  var token =  getToken();
+  var playlist = getPlaylist(token, keyword, getRandomNumber());
+  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
+  var attributes = await getSongAttributes(songs, token);
+  getRelevantSong(attributes);
   
-  global.keyword =  req.body.keyword;
+  res.redirect('http://localhost:3000');
+})
 
+router.post('/keyword', async function(req, res) {
+
+  global.keyword =  req.body.keyword;
   var qs = await quickstart();
     qs
-
   var token =  getToken();
-
   var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
-
   var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
-
   global.song = finalSong;
-
   res.redirect('http://localhost:3000')
   // res.redirect('http://spotivibes.surge.sh/')
 
  });
- 
+
  router.get('/song', function(req, res, next) {
   res.send(global.song);
 });
