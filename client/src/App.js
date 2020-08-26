@@ -31,7 +31,6 @@ render() {
   return (
     <div className="App">
       <header className="App-header">
-        <p className="App-intro">{this.state.song}</p>
       </header>
 
       <body>
