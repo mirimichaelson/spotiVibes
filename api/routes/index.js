@@ -258,13 +258,14 @@ router.get('/', function(req, res, next) {
 router.post('/image', async function (req, res) {
   var image = req.files.filename.data;
   global.keyword = await visionAnalysis(image);
+  var qs = await quickstart();
+  qs
   var token =  getToken();
-  var playlist = getPlaylist(token, keyword, getRandomNumber());
-  var songs = await getSongIDsFromPlaylist(playlist, token, getRandomNumber());
-  var attributes = await getSongAttributes(songs, token);
-  getRelevantSong(attributes);
-  
-  res.redirect('http://localhost:3000');
+  var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
+  var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
+  global.song = finalSong;
+  res.redirect('http://localhost:3000')
+// res.redirect('http://spotivibes.surge.sh/')
 })
 
 router.post('/keyword', async function(req, res) {
