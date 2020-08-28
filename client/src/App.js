@@ -15,8 +15,8 @@ class App extends React.Component {
 
 
   callAPI() {
-    // fetch("https://spotivibes-front-end.herokuapp.com/song")
-    fetch("http://localhost:9000/song")
+    fetch("https://spotivibes.herokuapp.com/song")
+    // fetch("http://localhost:9000/song")
 
         .then(res => res.text())
         .then(res => this.setState({ song: res }));
@@ -47,8 +47,8 @@ render() {
 
        <div class="wrapper">
 
-          <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}>
-        {/* <form method="post" action="https://spotivibes-front-end.herokuapp.com/keyword" onSubmit={this.onFormSubmit}> */}
+          {/* <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}> */}
+        <form method="post" action="https://spotivibes.herokuapp.com/keyword" onSubmit={this.onFormSubmit}>
     
           <input type="text" className="input" placeholder="Give me a song that makes me feel..." id="keyword" name="keyword" 
           style={{width: '300px'}}/>
@@ -56,26 +56,11 @@ render() {
           <button className='textButton' type="submit"/>
         </form>
 
-        {/* <form method="post" action="https://spotivibes-front-end.herokuapp.com/image" encType="multipart/form-data"> */}
-        <form method="post" action="http://localhost:9000/image" encType="multipart/form-data">
-          <input type="file" id="myFile" name="filename" />    
+        <form className="imageForm" method="post" action="https://spotivibes.herokuapp.com/image" encType="multipart/form-data" style={{top: '40px;'}}>
+        {/* <form method="post" action="http://localhost:9000/image" encType="multipart/form-data"> */}
+        <input type="file" id="myFile" name="filename" style={{paddingLeft: '60px;'}} />    
           <button className="button" type="submit"/>
         </form>
-
-        {/* <form class="upload-image-form">
-        <p id="upload-image-filepath"></p>
-  
-        <div class="upload-image btn">
-        <span>Upload your photo</span>
-        <input class="upload-image-input" type="file"/>
-       </div>
-  
-  <div class="upload-image-confirmation">
-    <input class="upload-image-cancel btn" type="reset" value="Cancel"/>
-    <input class="upload-image-submit btn" type="submit" value="Ok"/>
-  </div>
-</form> */}
-
 
         </div>
         <div className="spotifyPlayer">

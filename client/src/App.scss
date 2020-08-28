@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -61,7 +63,7 @@ body {
 
 .spotifyPlayer {
   position: relative;
-  top: 400px;
+  top: 500px;
   padding-bottom: 150px;
 }
 .App-link {
@@ -147,7 +149,8 @@ $gray: #bbbbbb;
 .button {
   outline:none;
   position: relative;
-  left: 150px;
+  // top: 10px;
+  left: 40px;
   font-family: 'Roboto', sans-serif;
   height: 40px;
   text-align: center;
@@ -160,7 +163,6 @@ $gray: #bbbbbb;
   text-shadow:0;
   size: 12px;
   color: #fe8761;
-
 
 
   cursor: pointer;
@@ -177,4 +179,59 @@ $gray: #bbbbbb;
   &:after {
     content:"SUBMIT";
   }
+}
+
+#myFile {
+  background: #fe8761;
+  font-family: 'Chivo', arial, tahoma, sans-serif;
+
+}
+@import url(https://fonts.googleapis.com/css?family=Chivo);
+
+
+.imageForm {
+  position: absolute;
+  bottom: 30%;
+  left: 50px;
+  margin:0 auto;
+  padding:20px;
+  padding-right:100px;
+
+	left: 50%;
+	margin-left: -50vw;
+  margin-right: -50vw;
+  
+	max-width: 100vw;
+	position: relative;
+  right: 50%;
+  // width: 100% !important;
+	width: 100vw;	height:auto !important;;
+	overflow:hidden;
+	background:#f6eec9;
+	border-radius:3px;
+}
+
+[type=file]{
+  margin:0;
+  padding:10px;
+  font-family: 'Chivo', arial, tahoma, sans-serif;
+  width:auto;
+  max-width:300px;
+  height:auto;
+  background-color:#929292;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  text-align:center;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -webkit-transition:0.2s ease all;
+     -moz-transition:0.2s ease all;
+      -ms-transition:0.2s ease all;
+       -o-transition:0.2s ease all;
+          transition:0.2s ease all;
+}
+
+[type=file].hover{
+  background:#ADADAD;
 }
