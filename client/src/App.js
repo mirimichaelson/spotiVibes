@@ -43,12 +43,10 @@ render() {
         <h1 className="spotivibesHeader">SpotiVibes</h1>
         <h2 className="moodRing">A mood ring for music</h2>
 
-
-
        <div class="wrapper">
 
-          {/* <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}> */}
-        <form method="post" action="https://spotivibes.herokuapp.com/keyword" onSubmit={this.onFormSubmit}>
+          <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}>
+        {/* <form method="post" action="https://spotivibes.herokuapp.com/keyword" onSubmit={this.onFormSubmit}> */}
     
           <input type="text" className="input" placeholder="Give me a song that makes me feel..." id="keyword" name="keyword" 
           style={{width: '300px'}}/>
@@ -57,7 +55,7 @@ render() {
         </form>
 
         <form className="imageForm" method="post" action="https://spotivibes.herokuapp.com/image" encType="multipart/form-data" style={{top: '40px;'}}>
-        {/* <form method="post" action="http://localhost:9000/image" encType="multipart/form-data"> */}
+        {/* <form className="imageForm" method="post" action="http://localhost:9000/image" encType="multipart/form-data" style={{top: '40px;'}}> */}
         <input type="file" id="myFile" name="filename" style={{paddingLeft: '60px;'}} />    
           <button className="button" type="submit"/>
         </form>
