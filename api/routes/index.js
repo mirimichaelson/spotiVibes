@@ -264,8 +264,8 @@ router.post('/image', async function (req, res) {
   var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
   var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
   global.song = finalSong;
-  res.redirect('http://localhost:3000')
-// res.redirect('http://spotivibes.surge.sh/')
+  // res.redirect('http://localhost:3000')
+  res.redirect('http://spotivibes.surge.sh/')
 })
 
 router.post('/keyword', async function(req, res) {
@@ -277,8 +277,8 @@ router.post('/keyword', async function(req, res) {
   var getListOfSongs = await getListOfGenreSongs(token, global.finalValence, global.magnitude);
   var finalSong = await getSongIDFromList(getListOfSongs, token, getRandomNumber());
   global.song = finalSong;
-  res.redirect('http://localhost:3000')
-  // res.redirect('http://spotivibes.surge.sh/')
+  // res.redirect('http://localhost:3000')
+  res.redirect('http://spotivibes.surge.sh/')
 
  });
 
