@@ -63,7 +63,7 @@ render() {
         </form>
 
         </div>
-        <div className="spotifyPlayer">
+        <div className="spotifyPlayer" id="spotiPlayer">
         <iframe src={this.songUrl()} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
 
