@@ -8,8 +8,8 @@
 }
 
 body {
-  background-color: black;
-  color: white;
+  background-color: #fe8761;
+  color: #f6eec9;
   font-family: 'Bebas Neue', cursive;
   /* font-family: 'MuseoModerno', cursive; */
 
@@ -28,7 +28,7 @@ body {
 
 .spotivibesHeader {
   padding-top: 150px;
-  font-size: 11rem;
+  font-size: 1100%;
   margin-bottom: 0;
 
 }
@@ -80,8 +80,8 @@ body {
 .input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #CCC;
-  color: #555;
+  border-bottom: 1px solid #f6eec9;
+  color: white;
   box-sizing: border-box;
   font-family: 'Arvo';
   font-size: 18px;
@@ -104,11 +104,11 @@ body {
   top: 100px;
 }
 input::-webkit-input-placeholder {
-  color: #AAA;
+  color: #f6eec9;
 }
 
 input:focus::-webkit-input-placeholder {
-  color: dodgerblue;
+  color: #cedebd;
 }
 
 .input:focus+.underline {
@@ -128,4 +128,53 @@ input:focus::-webkit-input-placeholder {
   -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   width: 202px;
+}
+
+$green: #1ECD97;
+$gray: #bbbbbb;
+
+.container {
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-left: -65px;
+  margin-top: -20px;
+  width: 130px;
+  height: 40px;
+  text-align: center;
+}
+
+.button {
+  outline:none;
+  position: relative;
+  left: 150px;
+  font-family: 'Roboto', sans-serif;
+  height: 40px;
+  text-align: center;
+  width: 130px;
+  border-radius:40px;
+  background: #f6eec9;
+  border: 2px solid #f6eec9;
+  color:$green;
+  letter-spacing:1px;
+  text-shadow:0;
+  size: 12px;
+  color: #fe8761;
+
+
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover {
+    color:#f6eec9;
+    border: 2px solid #f6eec9;
+    background: #fe8761;
+  }
+  &:active {
+    //letter-spacing: 2px;
+    letter-spacing: 2px ;
+  }
+  &:after {
+    content:"SUBMIT";
+  }
 }

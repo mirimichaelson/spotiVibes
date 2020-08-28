@@ -9,14 +9,14 @@ class App extends React.Component {
 }
 
   songUrl() {
-    const songPlayer= `https://open.spotify.com/embed/track/${this.state.song}` 
+    const songPlayer= `https://open.spotify.com/embed/track/${this.state.song}`
     return songPlayer;
 }
 
 
   callAPI() {
-    fetch("https://spotivibes.herokuapp.com/song")
-    // fetch("http://localhost:9000/song")
+    // fetch("https://spotivibes-front-end.herokuapp.com/song")
+    fetch("http://localhost:9000/song")
 
         .then(res => res.text())
         .then(res => this.setState({ song: res }));
@@ -26,10 +26,7 @@ class App extends React.Component {
     this.callAPI();
   }
 
-
 render() {
-
-  
   return (
 
 
@@ -50,27 +47,35 @@ render() {
 
        <div class="wrapper">
 
-          {/* <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}> */}
-        <form method="post" action="https://spotivibes.herokuapp.com/keyword" onSubmit={this.onFormSubmit}>
+          <form method="post" action="http://localhost:9000/keyword" onSubmit={this.onFormSubmit}>
+        {/* <form method="post" action="https://spotivibes-front-end.herokuapp.com/keyword" onSubmit={this.onFormSubmit}> */}
     
           <input type="text" className="input" placeholder="Give me a song that makes me feel..." id="keyword" name="keyword" 
           style={{width: '300px'}}/>
           <span className="underline"></span>
           <button className='textButton' type="submit"/>
         </form>
-        
-      {/* <div className="imageForm">  */}
-        {/* <form method="post" action="http://localhost:9000/image" encType="multipart/form-data" > */}
-        {/* ref={ref => this.imageForm = ref} id="global.imageForm" */}
-        {/* > */}
-        <form method="post" action="https://spotivibes.herokuapp.com/image" encType="multipart/form-data">
-         
-          <input type="file" id="myFile" name="filename" />
-           {/* onchange={submitImage()} */}
 
-          <input type="submit"/>
+        {/* <form method="post" action="https://spotivibes-front-end.herokuapp.com/image" encType="multipart/form-data"> */}
+        <form method="post" action="http://localhost:9000/image" encType="multipart/form-data">
+          <input type="file" id="myFile" name="filename" />    
+          <button className="button" type="submit"/>
         </form>
-        {/* </div> */}
+
+        {/* <form class="upload-image-form">
+        <p id="upload-image-filepath"></p>
+  
+        <div class="upload-image btn">
+        <span>Upload your photo</span>
+        <input class="upload-image-input" type="file"/>
+       </div>
+  
+  <div class="upload-image-confirmation">
+    <input class="upload-image-cancel btn" type="reset" value="Cancel"/>
+    <input class="upload-image-submit btn" type="submit" value="Ok"/>
+  </div>
+</form> */}
+
 
         </div>
         <div className="spotifyPlayer">
@@ -82,9 +87,6 @@ render() {
     </div>
     
   );
-    // function submitImage() {
-    // // this.refs[globalimageForm].submit();
-    // document.getElementById(global.imageForm).submit();
   }
 }
 export default App;
