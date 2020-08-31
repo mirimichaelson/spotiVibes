@@ -3,9 +3,7 @@
 ## Project Overview:
 
 Feeling glum but want to feel ecstatic?
-
 In good spirits but would rather chill out?
-
 Simply type in your desired disposition, or better yet upload a selfie, and our app will find you the perfect song.
 
 Team spotiVibes brings you a mood ring for music...
