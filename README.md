@@ -7,7 +7,7 @@ Simply type in your desired disposition, or better yet upload a selfie, and our 
 
 Team spotiVibes brings you a mood ring for music...
 
-[spotiVibes](http://spotivibes.surge.sh/)
+Find the app here: [spotiVibes](http://spotivibes.surge.sh/)
 
 Contributors:
 =============
