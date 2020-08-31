@@ -1,7 +1,6 @@
-# Spotivibes
+# spotiVibes
 
 ## Project Overview:
-=================
 
 Feeling glum but want to feel ecstatic?
 
@@ -15,7 +14,6 @@ Find the app here: [spotiVibes](http://spotivibes.surge.sh/)
 
 
 ## Thought Process:
-=================
 
 This is an app which returns a song from Spotify based on an emotional input. 
 
@@ -31,7 +29,6 @@ The sentiment score is fed into our Spotify API call, where we conduct our searc
 
 
 ## Contributors:
-=============
 
 - [Miri Michaelson](https://github.com/mirimichaelson)
 - [Joshua Ng](https://github.com/JoshuaNg2332)
@@ -52,12 +49,10 @@ Installation and Setup:
 - Move back to root folder with ```cd ..```
 
 ## How to run the App locally:
-===========================
 
 - Start the local server in both the api and client folders with ```npm start```
 
 ## Technologies:
-=============
 
 * Main technologies:
 
