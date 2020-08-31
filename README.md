@@ -20,8 +20,8 @@ A user can input either a word or an image into the app which will connect to th
 To achieve this, we worked with the Google Cloud Vision API & Google Cloud Natural Language API to find the sentiment in either a face or a word. 
 
 The sentiment score is fed into our Spotify API call, where we conduct our search primarily using:
-1) genre
-2) interpolating the sentiment score into the Spotify queries target danceability, target energy & target valence. 
+- genre
+- interpolating the sentiment score into the Spotify queries target danceability, target energy & target valence. 
 
 [process-flow-chart](./thought-process.jpg?raw=true)
 
