@@ -29,7 +29,7 @@ The sentiment score is fed into our Spotify API call, where we conduct our searc
 
 ![Frontpage Wireframe](./diagrams/page-on-load.png)
 ![Search Wireframe](./diagrams/page-on-search.png)
-![Final Wireframe](./diagrams/final-wireframe.png)
+![Final Wireframe](./diagrams/final-wireframe-design.png)
 
 ## Contributors:
 
