@@ -1,0 +1,237 @@
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+body {
+  background-color: #fe8761;
+  color: #f6eec9;
+  font-family: 'Bebas Neue', cursive;
+  /* font-family: 'MuseoModerno', cursive; */
+
+
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.textButton {
+  padding: 0;
+  border: 0;
+}
+
+.spotivibesHeader {
+  padding-top: 150px;
+  font-size: 1100%;
+  margin-bottom: 0;
+
+}
+
+.moodRing {
+  margin-top: 0;
+  font-size: 2rem;
+  position: absolute;
+  left: 700px;
+  bottom: 400px;
+}
+
+.wrapper {
+  position: absolute;
+  top: 102.5%;
+  left: 44%;
+  width: 300px;
+
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+}
+
+
+.forms {
+  position: relative;
+  top: 100px;
+}
+
+.spotifyPlayer {
+  position: relative;
+  top: 500px;
+  padding-bottom: 150px;
+}
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #f6eec9;
+  color: white;
+  box-sizing: border-box;
+  font-family: 'Arvo';
+  font-size: 18px;
+  height: 50px;
+  left: 50%;
+  margin: -25px 0 0 -100px;
+  padding: 10px 0px;
+  position: relative;
+  top: 50%;
+  width: 200px;
+  text-align: center;
+
+  &:focus {
+    outline: none;    
+  }
+}
+
+.imageForm {
+  position: relative;
+  top: 100px;
+}
+input::-webkit-input-placeholder {
+  color: #f6eec9;
+}
+
+input:focus::-webkit-input-placeholder {
+  color: #cedebd;
+}
+
+.input:focus+.underline {
+  transform: scale(1);
+}
+
+.underline {
+  background-color: dodgerblue;
+  display: inline-block;
+  height: 2px;
+  left: 50px;
+  margin-top: -4px;
+  position: absolute;
+  top: 185px;
+  -webkit-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+  width: 202px;
+}
+
+$green: #1ECD97;
+$gray: #bbbbbb;
+
+.container {
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-left: -65px;
+  margin-top: -20px;
+  width: 130px;
+  height: 40px;
+  text-align: center;
+}
+
+.button {
+  outline:none;
+  position: relative;
+  // top: 10px;
+  left: 110px;
+  font-family: 'Roboto', sans-serif;
+  height: 40px;
+  text-align: center;
+  width: 130px;
+  border-radius:40px;
+  background: #f6eec9;
+  border: 2px solid #f6eec9;
+  color:$green;
+  letter-spacing:1px;
+  text-shadow:0;
+  size: 12px;
+  color: #fe8761;
+
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover {
+    color:#f6eec9;
+    border: 2px solid #f6eec9;
+    background: #fe8761;
+  }
+  &:active {
+    //letter-spacing: 2px;
+    letter-spacing: 2px ;
+  }
+  &:after {
+    content:"SUBMIT";
+  }
+}
+
+#myFile {
+  background: #fe8761;
+  font-family: 'Chivo', arial, tahoma, sans-serif;
+
+}
+@import url(https://fonts.googleapis.com/css?family=Chivo);
+
+
+.imageForm {
+  position: absolute;
+  bottom: 30%;
+  left: 50px;
+  margin:0 auto;
+  padding:20px;
+  padding-right:100px;
+
+	left: 50%;
+	margin-left: -50vw;
+  margin-right: -50vw;
+  
+	max-width: 100vw;
+	position: relative;
+  right: 50%;
+  // width: 100% !important;
+	width: 100vw;	height:auto !important;;
+	overflow:hidden;
+	background:#f6eec9;
+	border-radius:3px;
+}
+
+[type=file]{
+  margin:0;
+  padding:10px;
+  font-family: 'Chivo', arial, tahoma, sans-serif;
+  width:auto;
+  max-width:300px;
+  height:auto;
+  background-color:#929292;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  text-align:center;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -webkit-transition:0.2s ease all;
+     -moz-transition:0.2s ease all;
+      -ms-transition:0.2s ease all;
+       -o-transition:0.2s ease all;
+          transition:0.2s ease all;
+}
+
+[type=file].hover{
+  background:#ADADAD;
+}
