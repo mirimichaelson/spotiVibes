@@ -10,6 +10,8 @@ Team spotiVibes brings you a mood ring for music...
 
 Find the app here: [spotiVibes](http://spotivibes.surge.sh/)
 
+![Front Page](./screenshots/screenshot1.png)
+![Search Result](./screenshots/screenshot2.png)
 
 ## Thought Process:
 
@@ -25,6 +27,9 @@ The sentiment score is fed into our Spotify API call, where we conduct our searc
 
 [process-flow-chart](./thought-process.jpg?raw=true)
 
+![Frontpage Wireframe](./diagrams/page-on-load.png)
+![Search Wireframe](./diagrams/page-on-search.png)
+![Final Wireframe](./diagrams/final-wireframe.png)
 
 ## Contributors:
 
