@@ -13,6 +13,8 @@ Find the app here: [spotiVibes](http://spotivibes.surge.sh/)
 ![Front Page](./screenshots/screenshot1.png)
 ![Search Result](./screenshots/screenshot2.png)
 
+You can checkout our project presentation with a live demo [here!](https://youtu.be/CvSn3ldFvy0?t=2037)
+
 ## Thought Process:
 
 This is an app which returns a song from Spotify based on an emotional input. 
@@ -27,11 +29,10 @@ The sentiment score is fed into our Spotify API call, where we conduct our searc
 
 [process-flow-chart](./thought-process.jpg?raw=true)
 
-![Frontpage Wireframe](./diagrams/page-on-load.png)
+![Front page Wireframe](./diagrams/page-on-load.png)
 ![Search Wireframe](./diagrams/page-on-search.png)
 ![Final Wireframe](./diagrams/final-wireframe-design.png)
 
-## Contributors:
 
 - [Miri Michaelson](https://github.com/mirimichaelson)
 - [Joshua Ng](https://github.com/JoshuaNg2332)
