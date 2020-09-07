@@ -27,9 +27,11 @@ The sentiment score is fed into our Spotify API call, where we conduct our searc
 - genre
 - interpolating the sentiment score into the Spotify queries target danceability, target energy & target valence. 
 
-[process-flow-chart](./thought-process.jpg?raw=true)
+### Mapping The Process
+![process-flow-chart](./thought-process.jpg?raw=true)
 
-![Front page Wireframe](./diagrams/page-on-load.png)
+### Wireframes
+![Frontpage Wireframe](./diagrams/page-on-load.png)
 ![Search Wireframe](./diagrams/page-on-search.png)
 ![Final Wireframe](./diagrams/final-wireframe-design.png)
 
