@@ -13,7 +13,7 @@ Find the app here: [spotiVibes](http://spotivibes.surge.sh/)
 ![Front Page](./screenshots/screenshot1.png)
 ![Search Result](./screenshots/screenshot2.png)
 
-You can checkout our project presentation with a live demo [here!](https://youtu.be/CvSn3ldFvy0?t=2037)
+You can checkout our project presentation with a live demo [here!](https://www.youtube.com/watch?v=6l6IhH3GiXw)
 
 ## Thought Process:
 
